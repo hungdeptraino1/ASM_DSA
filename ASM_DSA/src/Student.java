@@ -3,6 +3,7 @@ public class Student {
     private double studentMarks;
     private String studentId;
     private String studentRank;
+    static int count = 0;
 
     //constructor
     public Student(String studentId, String studentName, double studentMarks) {
@@ -42,7 +43,7 @@ public class Student {
     }
 
     public void setSudentRank(int studentRank) {
-        this.studentRank = String.valueOf(studentRank);
+        this.studentRank = getRank();
     }
 
     public String printStudent(){
