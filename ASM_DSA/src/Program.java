@@ -79,7 +79,7 @@ public class Program {
         System.out.print("Enter new Id: ");
         String newId = sc.next();
 
-        System.out.print("Ejnter new Name: ");
+        System.out.print("Enter new Name: ");
         String newName = sc.next();
 
         double newMarks = -1;
