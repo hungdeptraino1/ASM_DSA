@@ -22,7 +22,7 @@ public class Main {
                     Program.deleteStudent();
                     break;
                 case 4:
-                    Program.sortStudent();
+                    Program.QsortStudent();
                     break;
                 case 5:
                     Program.searchStudent();

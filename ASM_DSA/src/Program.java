@@ -16,7 +16,6 @@ public class Program {
     }
 
     static void addStudent(){
-
         System.out.print("Enter number of student: ");
         int numStu = 0;
         while (numStu <=0){
@@ -115,7 +114,7 @@ public class Program {
         for (int i = 0; i < currentSize; i++) {
             Student student = list.list[i];
             if (student != null) {
-                System.out.println((i + 1) + ": " + student.getStudentid()); // Display index starting from 1
+                System.out.println((i + 1) + ": " + student.getStudentid());
             }
         }
 
@@ -131,8 +130,63 @@ public class Program {
         System.out.println("Student at index " + index + " has been deleted.");
     }
 
+    //Quick sort
+    static void QsortStudent(){
+        int n = list.size();
+        if (n == 0) {
+            System.out.println("No students to sort.");
+            return;
+        }
 
-    static void sortStudent(){
+        Student[] studentsArray = new Student[n];
+        for (int i = 0; i < n; i++) {
+            studentsArray[i] = list.list[i];
+        }
+
+        quickSort(studentsArray, 0, n - 1);
+
+        for (int i = 0; i < n; i++) {
+            list.list[i] = studentsArray[i];
+            list.list[i].setSudentRank(i + 1);
+        }
+
+        System.out.println("Students sorted by marks.");
+        System.out.println("-_________-");
+        list.printList();
+    }
+
+    static int partition(Student[] arr, int low, int high) {
+        double pivot = arr[high].getMarks();
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j].getMarks() < pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    static void swap(Student[] arr, int i, int j) {
+        Student temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static void quickSort(Student[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high); // Chia mảng
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    //Bubble sort
+    static void BsortStudent(){
+
         int n = list.size();
         if (n == 0) {
             System.out.println("No students to sort.");
@@ -195,5 +249,4 @@ public class Program {
             System.out.println("No student exists at the given index.");
         }
     }
-
 }

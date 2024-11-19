@@ -53,7 +53,7 @@ public class StudentList {
 
     boolean contain (Student student){
         for(Student s : list){
-            if (student.getStudentid().equals(s.getStudentid())){
+            if (s != null && student.getStudentid().equals(s.getStudentid())){
                 return true;
             }
         }
