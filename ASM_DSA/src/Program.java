@@ -28,12 +28,22 @@ public class Program {
                 System.out.print("Number of students must be greater than 0. Please enter a valid number: ");
             }
         }
-        for(int i = 0; i < numStu; i++){
-            System.out.print("Enter Student Id: ");
-            String studentId = sc.next();
+        sc.nextLine();
+
+        for (int i = 0; i < numStu; i++) {
+            String studentId;
+            while (true) {
+                System.out.print("Enter Student Id: ");
+                studentId = sc.nextLine();
+                if (!list.contain(new Student(studentId, "", 0))) {
+                    break;
+                } else {
+                    System.out.println("Student with this ID already exists. Please enter a different ID.");
+                }
+            }
 
             System.out.print("Enter Student name: ");
-            String studentName = sc.next();
+            String studentName = sc.nextLine();
 
             double studentMarks = -1;
             while (studentMarks < 0 || studentMarks > 10) {
@@ -47,16 +57,12 @@ public class Program {
                     System.out.println("Invalid input. Please enter a valid double value for marks.");
                     sc.next();
                 }
-                System.out.println("-_________-");
+                sc.nextLine();
             }
+            System.out.println("-_________-");
 
             Student student = new Student(studentId, studentName, studentMarks);
-
-            if (!list.contain(student)) {
-                list.add(student);
-            } else {
-                System.out.println("Student with this ID already exists.");
-            }
+            list.add(student);
         }
     }
 
@@ -143,7 +149,11 @@ public class Program {
             studentsArray[i] = list.list[i];
         }
 
-        quickSort(studentsArray, 0, n - 1);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Choose sorting order (1 for ascending, 2 for descending): ");
+        int choice = scanner.nextInt();
+
+        quickSort(studentsArray, 0, n - 1, choice == 2);
 
         for (int i = 0; i < n; i++) {
             list.list[i] = studentsArray[i];
@@ -155,12 +165,12 @@ public class Program {
         list.printList();
     }
 
-    static int partition(Student[] arr, int low, int high) {
+    static int partition(Student[] arr, int low, int high, boolean descending) {
         double pivot = arr[high].getMarks();
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (arr[j].getMarks() < pivot) {
+            if ((descending && arr[j].getMarks() > pivot) || (!descending && arr[j].getMarks() < pivot)) {
                 i++;
                 swap(arr, i, j);
             }
@@ -175,12 +185,12 @@ public class Program {
         arr[j] = temp;
     }
 
-    static void quickSort(Student[] arr, int low, int high) {
+    static void quickSort(Student[] arr, int low, int high, boolean descending) {
         if (low < high) {
-            int pi = partition(arr, low, high); // Chia mảng
+            int pi = partition(arr, low, high, descending);
 
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+            quickSort(arr, low, pi - 1, descending);
+            quickSort(arr, pi + 1, high, descending);
         }
     }
 
